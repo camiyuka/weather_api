@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+# Carrega as variáveis de ambiente do arquivo .env
+load_dotenv()
 """
 Django settings for core project.
 
@@ -77,12 +82,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.dummy',
+        # 'ENGINE': 'djongo',
+    }
+}
 
 # MONGO_CONNECTION_STRING = "mongodb+srv://ads_user:<password>@clusterads.xmrbktn.mongodb.net/?retryWrites=true&w=majority&appName=ClusterADS"
 MONGO_CONNECTION_STRING = 'mongodb://localhost:27017/'
