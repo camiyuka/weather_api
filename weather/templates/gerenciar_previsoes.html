@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Previsões</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color:#5f9ac2;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }   
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Previsões do Tempo</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Temperatura</th>
+                <th>Data</th>
+                <th>Cidade</th>
+                <th>Pressão Atmosférica</th>
+                <th>Humidade</th>
+                <th>Tempo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for weather in weathers %}
+            <tr>
+                <td>{{ weather.temperature }}</td>
+                <td>{{ weather.date }}</td>
+                <td>{{ weather.city }}</td>
+                <td>{{ weather.atmosphericPressure }}</td>
+                <td>{{ weather.humidity }}</td>
+                <td>{{ weather.weather }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
