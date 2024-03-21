@@ -17,7 +17,7 @@ class WeatherRepository:
         return connection
     
 # estabelece conexão com collection 
-    def getCollection(self):
+    def get_collection(self):
         conn = self.getConnection()
         collection = conn[self.collection]
         return collection
@@ -25,7 +25,7 @@ class WeatherRepository:
     # CRUD
     def getAll(self):
         # busca por um JSON
-        document = self.getCollection().find({})
+        document = self.get_collection().find({})
         return document
     
     def get_by_id(self, document_id):
@@ -38,7 +38,7 @@ class WeatherRepository:
         documents = self.get_collection().find({attribute: value})
         return documents
 
-    def insert_document(self, document):
+    def insert(self, document):
         # Insere um novo documento na coleção
         self.get_collection().insert_one(document)
 
@@ -52,3 +52,6 @@ class WeatherRepository:
 
     def post(self, document):
             self.insert_document(document)
+
+
+            
