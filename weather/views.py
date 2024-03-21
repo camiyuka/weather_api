@@ -1,52 +1,48 @@
 from django.views import View
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import WeatherEntity
 from .repositories import WeatherRepository
 from .serializers import WeatherSerializer
 from django import forms
+from django.views.decorators.csrf import csrf_exempt
+import datetime
+from django.http.response import HttpResponse
+
+@csrf_exempt
 
 class WeatherView(View):
-    def get(self, request):
+    # get all
+    def get(request):
         repository = WeatherRepository(collectionName='weathers')
         weathers_queryset = repository.getAll()
         weathers_serializer = WeatherSerializer(weathers_queryset, many=True)
         weathers_data = weathers_serializer.data
         return render(request, "gerenciar_previsoes.html", {"weathers": weathers_data})
 
+
 class WeatherPost(View):
-    class WeatherForm(forms.Form):
-        temperature = forms.FloatField()
-        date = forms.DateField()
-        city = forms.CharField(max_length=100)
-        atmospheric_pressure = forms.FloatField()
-        humidity = forms.FloatField()
-        weather = forms.CharField(max_length=100)
+    def get(request):
+        return render(request, 'weather_form.html')
 
-    def get(self, request):
-        form = self.WeatherForm()
-        return render(request, 'weather_form.html', {'form': form})
+    def post(request):
+        data = request.POST
+        model = WeatherEntity(
+            temperature=data['temperature'],
+            atmospheric_pressure=data['atmospheric_pressure'],
+            humidity=data['humidity'],
+            weather=data['weather'],
+            city=data['city']
+        )
 
-    def post(self, request):
-        form = self.WeatherForm(request.POST)
-        if form.is_valid():
-            temperature = form.cleaned_data['temperature']
-            date = form.cleaned_data['date']
-            city = form.cleaned_data['city']
-            atmospheric_pressure = form.cleaned_data['atmospheric_pressure']
-            humidity = form.cleaned_data['humidity']
-            weather = form.cleaned_data['weather']
+        serializer= WeatherSerializer(data=model.__dict__)
+        if serializer.is_valid():
+            document=serializer.validated_data
+            repository= WeatherRepository('weathers')
+            repository.insert(document)
+            return render(request, "gerenciar_previsoes.html", {"weathers": [serializer.data]})
+        return HttpResponse(serializer.errors)
 
-            # Salvar os dados no banco de dados
-            WeatherEntity.objects.create(
-                temperature=temperature,
-                date=date,
-                city=city,
-                atmospheric_pressure=atmospheric_pressure,
-                humidity=humidity,
-                weather=weather
-            )
-            # Redirecionar para a página de gerenciamento de previsões
-            return redirect('Weather View')
-        else:
             # Se houver erros de validação, renderizar novamente o formulário com os erros
-            return render(request, 'weather_form.html', {'form': form})
+        # return render(request, 'weather_form.html', {'form': form})
+
