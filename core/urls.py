@@ -4,7 +4,7 @@ from weather.views import WeatherPost
 
 
 urlpatterns = [
-    path('gerenciar', WeatherView.as_view(), name='Weather View'),
-    path('forms', WeatherPost.as_view(), name='Weather Post'),
+    path('visualizar', WeatherPost.get, name='Weather View'), 
+    path('', WeatherPost.post, name='Weather Post'),
 
 ]
