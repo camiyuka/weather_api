@@ -54,7 +54,9 @@
 <body>
     <div class="container">
         <h1> Cadastro tempo</h1>
-        <form action="gerenciar_previsoes.html" method="post">
+        <form action="{% url 'Weather Post' %}" method="post">
+            {% csrf_token %}
+
             <label for="temperature">Temperatura:</label>
             <input type="text" id="temperature" name="temperature" required>
 
@@ -64,10 +66,10 @@
             <label for="city">Cidade:</label>
             <input type="text" id="city" name="city">
 
-            <label for="atmosphericPressure">Pressão Atmosférica:</label>
-            <input type="text" id="atmosphericPressure" name="atmosphericPressure">
+            <label for="atmospheric_pressure">Pressão Atmosférica:</label>
+            <input type="text" id="atmospheric_pressure" name="atmospheric_pressure">
 
-            <label for="humidity">Humidade:</label>
+            <label for="humidity">Umidade:</label>
             <input type="text" id="humidity" name="humidity">
 
             <label for="weather">Tempo:</label>
