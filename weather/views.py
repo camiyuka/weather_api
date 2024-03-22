@@ -20,9 +20,7 @@ class WeatherView(View):
         weathers_data = weathers_serializer.data
         return render(request, "gerenciar_previsoes.html", {"weathers": weathers_data})
 
-
-class WeatherPost(View):
-    def get(request):
+    def return_form(request):
         return render(request, 'weather_form.html')
 
     def post(request):
@@ -41,7 +39,8 @@ class WeatherPost(View):
             repository= WeatherRepository('weathers')
             repository.insert(document)
             return render(request, "gerenciar_previsoes.html", {"weathers": [serializer.data]})
-        return HttpResponse(serializer.errors)
+        else:
+            return HttpResponse(serializer.errors)
 
             # Se houver erros de validação, renderizar novamente o formulário com os erros
         # return render(request, 'weather_form.html', {'form': form})
