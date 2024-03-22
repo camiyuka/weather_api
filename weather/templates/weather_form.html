@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Data Form</title>
+    <title> Cadastro de previsões</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <h1> Cadastro tempo</h1>
-        <form action="{% url 'Weather Post' %}" method="post">
+        <form action="{% url 'weather post' %}" method="post">
             {% csrf_token %}
 
             <label for="temperature">Temperatura:</label>
